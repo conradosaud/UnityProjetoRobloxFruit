@@ -1,10 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public enum EstadoPulo
+public enum EstadoPulo_Backup
 {
     Pulando,
     Subindo,
@@ -12,7 +12,7 @@ public enum EstadoPulo
     Solo
 }
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerController_Backup : MonoBehaviour
 {
 
     //public float velocidadeQueda = 10f;
@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     // Controlador do personagem
     CharacterController cc;
     Vector3 movimentoJogador;
-    EstadoPulo estadoPulo;
+    EstadoPulo_Backup estadoPulo_Backup;
 
     private float raycastPes = 0.6f;
     private float raycastCabeca = 0.6f;
@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         cc = GetComponent<CharacterController>();
-        estadoPulo = EstadoPulo.Solo;
+        estadoPulo_Backup = EstadoPulo_Backup.Solo;
     }
 
     void Update()
@@ -58,60 +58,60 @@ public class PlayerMovement : MonoBehaviour
     // Define quais foram os inputs apertados
     void defineInputs()
     {
-        // Verifica os inputs do usuário
+        // Verifica os inputs do usuï¿½rio
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
         teclaPulo = Input.GetKeyDown(KeyCode.Space) == true;
     }
 
-    // Atualiza a nova posição do jogador e movimenta ele
+    // Atualiza a nova posiï¿½ï¿½o do jogador e movimenta ele
     void defineMovimentoJogador()
     {
-        // Define a velocidade e normaliza o tempo de atualização
+        // Define a velocidade e normaliza o tempo de atualizaï¿½ï¿½o
         float direcao_x = horizontal * velocidade * Time.deltaTime;
         float direcao_z = vertical * velocidade * Time.deltaTime;
         float direcao_y = -gravidade; // Automaticamente puxa o jogador para baixo
 
         // Suaviza a velocidade de subida do pulo
-        if (estadoPulo == EstadoPulo.Pulando)
+        if (estadoPulo_Backup == EstadoPulo_Backup.Pulando)
             direcao_y = Mathf.SmoothStep(gravidade, gravidade * 0.30f, tempoPercorrido / tempoPulo);
 
-        // Se estiver caindo, o cálculo da queda é mais suave
-        if (estadoPulo == EstadoPulo.Caindo) 
+        // Se estiver caindo, o cï¿½lculo da queda ï¿½ mais suave
+        if (estadoPulo_Backup == EstadoPulo_Backup.Caindo)
             direcao_y = Mathf.SmoothStep(-gravidade * 0.20f, -gravidade, tempoPercorrido / tempoPulo);
 
-        // normaliza o tempo de atualização do eixo Y
+        // normaliza o tempo de atualizaï¿½ï¿½o do eixo Y
         direcao_y *= Time.deltaTime;
 
-        // Atribui as direções necessárias para e movimenta o Character Controller
+        // Atribui as direï¿½ï¿½es necessï¿½rias para e movimenta o Character Controller
         movimentoJogador = new Vector3(direcao_x, direcao_y, direcao_z);
         cc.Move(movimentoJogador);
 
     }
 
-    // Checa os estados do pulo e atribui ações a cada um deles
+    // Checa os estados do pulo e atribui aï¿½ï¿½es a cada um deles
     void checaEstadosDePulo()
     {
-        // Verifica se apertou espaço e se o jogador está no solo
-        if (teclaPulo == true && estadoPulo == EstadoPulo.Solo)
-            estadoPulo = EstadoPulo.Pulando; // Alterna o estado do pulo
+        // Verifica se apertou espaï¿½o e se o jogador estï¿½ no solo
+        if (teclaPulo == true && estadoPulo_Backup == EstadoPulo_Backup.Solo)
+            estadoPulo_Backup = EstadoPulo_Backup.Pulando; // Alterna o estado do pulo
 
-        // Faz as verificações durante o pulo
-        if (estadoPulo == EstadoPulo.Pulando)
+        // Faz as verificaï¿½ï¿½es durante o pulo
+        if (estadoPulo_Backup == EstadoPulo_Backup.Pulando)
         {
-            // Atualização do tempo e altura do pulo
+            // Atualizaï¿½ï¿½o do tempo e altura do pulo
             if (tempoPercorrido < tempoPulo)
             {
                 tempoPercorrido += gravidade * Time.deltaTime;
             }
             else
-            { // Caso contrário, define que o jogador está caindo
-                estadoPulo = EstadoPulo.Caindo;
+            { // Caso contrï¿½rio, define que o jogador estï¿½ caindo
+                estadoPulo_Backup = EstadoPulo_Backup.Caindo;
                 tempoPercorrido = 0;
             }
         }
-        // Atualização do tempo e altura da queda
-        if (estadoPulo == EstadoPulo.Caindo)
+        // Atualizaï¿½ï¿½o do tempo e altura da queda
+        if (estadoPulo_Backup == EstadoPulo_Backup.Caindo)
         {
             tempoPercorrido += gravidade * Time.deltaTime;
         }
@@ -120,38 +120,38 @@ public class PlayerMovement : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
 
-        // Redução do nome das variáveis
+        // Reduï¿½ï¿½o do nome das variï¿½veis
         Vector3 p = transform.position;
         Vector3 t = transform.localScale / 2;
         Quaternion r = transform.rotation;
 
-        // Verifica o marcador de Raycast dos pés
+        // Verifica o marcador de Raycast dos pï¿½s
         //if (Physics.Raycast(transform.position, Vector3.down, raycastPes))
         if (Physics.BoxCast(p, t, Vector3.down, r, raycastPes))
         {
-            // Ao tocar no chão e identificar que está caindo, reseta o pulo
-            if (estadoPulo == EstadoPulo.Caindo)
+            // Ao tocar no chï¿½o e identificar que estï¿½ caindo, reseta o pulo
+            if (estadoPulo_Backup == EstadoPulo_Backup.Caindo)
             {
                 Debug.Log("Pulo resetado");
-                estadoPulo = EstadoPulo.Solo;
+                estadoPulo_Backup = EstadoPulo_Backup.Solo;
                 tempoPercorrido = 0;
             }
         }
 
-        // Verifica o marcador de Raycast da cabeça
-        Vector3 margemCabeca = new Vector3(0.5f, 0, 0.5f); // Deixa uma margem de erro pra cabeça
+        // Verifica o marcador de Raycast da cabeï¿½a
+        Vector3 margemCabeca = new Vector3(0.5f, 0, 0.5f); // Deixa uma margem de erro pra cabeï¿½a
         if (Physics.BoxCast(p, t - margemCabeca, Vector3.up, r, raycastCabeca))
         {
-            // Ao tocar no teto, define a animação de queda
-            if (estadoPulo == EstadoPulo.Pulando)
+            // Ao tocar no teto, define a animaï¿½ï¿½o de queda
+            if (estadoPulo_Backup == EstadoPulo_Backup.Pulando)
             {
-                Debug.Log("Bateu a cabeça em algo. Começou a cair...");
-                estadoPulo = EstadoPulo.Caindo;
+                Debug.Log("Bateu a cabeï¿½a em algo. Comeï¿½ou a cair...");
+                estadoPulo_Backup = EstadoPulo_Backup.Caindo;
                 tempoPercorrido = 0;
             }
         }
-        
-        
+
+
     }
 
     void mostrarRaycasts()

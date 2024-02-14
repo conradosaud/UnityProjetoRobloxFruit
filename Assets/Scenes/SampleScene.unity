@@ -784,6 +784,9 @@ GameObject:
   - component: {fileID: 1373107788}
   - component: {fileID: 1373107786}
   - component: {fileID: 1373107792}
+  - component: {fileID: 1373107793}
+  - component: {fileID: 1373107795}
+  - component: {fileID: 1373107794}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -916,9 +919,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b67b25f44dbc545a5d946c9cc3987a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1373107793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373107785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7b37ea942afe754e8f7f8f7e37624a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1373107794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373107785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f6e0d67bec50b44a815586aa471b1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   velocidade: 5
-  tempoPulo: 4
-  gravidade: 14
+--- !u!114 &1373107795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373107785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8133ea6462b0fcc418a8b3937d96686d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tempoPulo: 5
 --- !u!1 &1654140313
 GameObject:
   m_ObjectHideFlags: 0
