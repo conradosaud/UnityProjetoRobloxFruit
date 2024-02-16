@@ -14,7 +14,6 @@ public enum EstadoPulo
 public class PlayerJump : MonoBehaviour
 {
 
-
     // Controladores do personagem
     CharacterController cc; // Character Controller
     public static EstadoPulo estadoPulo; // Define o estado atual do pulo do jogador
