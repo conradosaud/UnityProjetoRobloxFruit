@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float velocidade = 5f;
     CharacterController cc; // Character Controller
+    Vector3 movimentoJogador; // Nova posição do jogador calculada todo Update
 
     void Start()
     {
@@ -14,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
         cc = GetComponent<CharacterController>();
     }
 
+    // Update is called once per frame
     void Update()
     {
         defineMovimentoJogador();
@@ -22,14 +24,9 @@ public class PlayerMovement : MonoBehaviour
     // Atualiza a nova posição do jogador e movimenta ele
     void defineMovimentoJogador()
     {
-        // Controlador de velocidade do jogador em caso de combate enquanto se move
-        float velocidadeFinal = velocidade;
-        if (PlayerCombat.estaLutando)
-            velocidadeFinal = velocidade / 2f;
-
         // Define a velocidade e normaliza o tempo de atualização
-        float direcao_x = InputController.inputHorizontal * velocidadeFinal * Time.deltaTime;
-        float direcao_z = InputController.inputVertical * velocidadeFinal * Time.deltaTime;
+        float direcao_x = InputController.inputHorizontal * velocidade * Time.deltaTime;
+        float direcao_z = InputController.inputVertical * velocidade * Time.deltaTime;
         float direcao_y = -PlayerManager.gravidade; // Automaticamente puxa o jogador para baixo
 
         // Suaviza a velocidade de subida do pulo
