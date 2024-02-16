@@ -4,6 +4,14 @@ using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 
+public enum PlayerState
+{
+    Idle,
+    Moving,
+    Jumping,
+    Falling
+}
+
 public class PlayerManager : MonoBehaviour
 {
 
@@ -11,14 +19,11 @@ public class PlayerManager : MonoBehaviour
     // também é usado como força do pulo
     public static float gravidade = 10f;
 
+    public static PlayerState playerState;
+
     void Start()
     {
-
-    }
-
-    void Update()
-    {
-        
+        playerState = PlayerState.Idle;
     }
 
 }
