@@ -17,7 +17,7 @@ public class InputController : MonoBehaviour
         inputHorizontal = Input.GetAxisRaw("Horizontal");
         inputVertical = Input.GetAxisRaw("Vertical");
         inputPulo = Input.GetKeyDown(KeyCode.Space) == true; // Definir controle para Joystick
-        inputAcaoPrincipal = Input.GetAxis("Fire1") != 0;
+        inputAcaoPrincipal = Input.GetKeyDown(KeyCode.Mouse0) == true;
         inputAcaoSecundaria = Input.GetAxis("Fire2") != 0;
     }
 }
