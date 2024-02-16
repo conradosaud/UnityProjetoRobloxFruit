@@ -5,23 +5,36 @@ using UnityEngine;
 public class PlayerAnimationController : MonoBehaviour
 {
 
+    CharacterController cc;
     Animator animator;
 
     void Start()
     {
+        cc = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        if( PlayerManager.playerState == PlayerState.Idle)
+
+        if( PlayerJump.estadoPulo == EstadoPulo.Pulando || PlayerJump.estadoPulo == EstadoPulo.Caindo)
         {
-            Debug.Log("asdads");
-            animator.SetBool("estaCorrendo", false);
+            animator.SetBool("estaPulando", true);
         }
-        if( PlayerManager.playerState == PlayerState.Moving)
+        else
         {
-            animator.SetBool("estaCorrendo", true);
+            animator.SetBool("estaPulando", false);
+
+            if( cc.velocity.magnitude > 1)
+            {
+                animator.SetBool("estaCorrendo", true);
+            }
+            else
+            {
+                animator.SetBool("estaCorrendo", false);
+            }
         }
+
+
     }
 }

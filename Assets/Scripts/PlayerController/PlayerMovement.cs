@@ -29,11 +29,6 @@ public class PlayerMovement : MonoBehaviour
         float direcao_z = InputController.inputVertical * velocidade * Time.deltaTime;
         float direcao_y = -PlayerManager.gravidade; // Automaticamente puxa o jogador para baixo
 
-        if (direcao_x == 0 && direcao_z == 0)
-            PlayerManager.playerState = PlayerState.Idle;
-        else
-            PlayerManager.playerState = PlayerState.Moving;
-
         // Suaviza a velocidade de subida do pulo
         if (PlayerJump.estadoPulo == EstadoPulo.Pulando)
             direcao_y = 
@@ -46,7 +41,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Normaliza o tempo de atualização do eixo Y
         direcao_y *= Time.deltaTime;
-
 
         // Calcula a direção vertical do movimento
         Vector3 direcao_vertical = Vector3.up * direcao_y;
@@ -73,11 +67,11 @@ public class PlayerMovement : MonoBehaviour
         {
             // Calcula a rotação com base na entrada do jogador
 
-            float verticalAngle = Mathf.Atan2( -frente.x + -direita.x, -frente.z + -direita.z) * Mathf.Rad2Deg;
+            float verticalAngle = Mathf.Atan2( frente.x + direita.x, frente.z + direita.z) * Mathf.Rad2Deg;
             //verticalAngle = Mathf.Atan2( -frente.x, -frente.z) * Mathf.Rad2Deg;
             Quaternion rotacaoDesejada = Quaternion.Euler(0, verticalAngle, 0);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotacaoDesejada, 0.15f);
-        };
+        }
 
         // O resultado vai orientar o jogador na direção horizontal
         Vector3 movimento_horizontal = frente + direita;

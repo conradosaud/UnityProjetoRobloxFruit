@@ -46,7 +46,10 @@ public class PlayerJump : MonoBehaviour
     {
         // Verifica se apertou espaço e se o jogador está no solo
         if (InputController.inputPulo == true && estadoPulo == EstadoPulo.Solo)
+        {
+            Debug.Log("salve");
             estadoPulo = EstadoPulo.Pulando; // Alterna o estado do pulo
+        }
 
         // Faz as verificações durante o pulo
         if (estadoPulo == EstadoPulo.Pulando)
