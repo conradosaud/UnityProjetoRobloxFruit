@@ -6,10 +6,17 @@ public class PlayerCombat : MonoBehaviour
 {
 
     Animator animator;
-    //public static bool estaLutando = false;
-    bool podeAtacar = true;
-    int golpe = 0;
+    
+    // Estado do combate para outros scripts identificarem
+    public static bool estaLutando = false;
 
+    // Configurações de golpes do combo
+    int combo = 0;
+    int comboTotal = 3;
+    bool podeAtacar = true; // Define se o próximo golpe já pode ser dado
+
+    // Determina o tempo de duração entre cada golpe do combo
+    float tempoMaximo = 1f;
     float tempoDecorrido = 0f;
 
     void Start()
@@ -20,47 +27,50 @@ public class PlayerCombat : MonoBehaviour
     void Update()
     {
         if( InputController.inputAcaoPrincipal && podeAtacar == true )
-        {
             proximoGolpe();
-        }
 
     }
 
     void FixedUpdate()
     {
+        // Contabiliza o tempo entre os golpes
         if( podeAtacar == true )
             tempoDecorrido += Time.deltaTime;
-        if (tempoDecorrido > 1f)
+        // Verifica se o tempo entre os golpes expirou
+        if (tempoDecorrido > tempoMaximo)
         {
-            golpe = 0;
-            fimDoGolpe();
+            combo = 0; // Reseta a contagem do combo
+            fimDoGolpe(); // Atualiza o Animator para que ele resete a animação
         }
     }
 
+    // Inicia o próximo golpe do combo
     void proximoGolpe()
     {
-        golpe++;
-        animator.SetInteger("estaLutandoPunhos", golpe);
-        podeAtacar = false;
+        // Passa para o próximo golpe do combo
+        combo++;
 
-        if ( golpe >= 3)
-        {
-            golpe = 0;
-            //estaLutando = false;
-        }
-        else
-        {
-            //estaLutando = true;
-        }
-        
+        // Atualiza a animação e os estados do combate
+        animator.SetInteger("estaLutandoPunhos", combo);
+        podeAtacar = false;
+        estaLutando = true;
+
+        // Reseta o combo se chegou no máximo
+        if (combo >= comboTotal)
+            combo = 0;
 
     }
 
+    // Função chamada no último frame de cada golpe do combo
     void fimDoGolpe()
     {
         tempoDecorrido = 0;
         podeAtacar = true;
-        animator.SetInteger("estaLutandoPunhos", golpe);
+        if (combo == 0)
+        {
+            animator.SetInteger("estaLutandoPunhos", combo);
+            estaLutando = false;
+        }
     }
 
 

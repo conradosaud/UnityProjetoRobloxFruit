@@ -24,9 +24,15 @@ public class PlayerMovement : MonoBehaviour
     // Atualiza a nova posição do jogador e movimenta ele
     void defineMovimentoJogador()
     {
+
+        // Redução de velocidade durante o combate
+        float velocidadeFinal = velocidade;
+        if (PlayerCombat.estaLutando)
+            velocidadeFinal = velocidade / 2f;
+
         // Define a velocidade e normaliza o tempo de atualização
-        float direcao_x = InputController.inputHorizontal * velocidade * Time.deltaTime;
-        float direcao_z = InputController.inputVertical * velocidade * Time.deltaTime;
+        float direcao_x = InputController.inputHorizontal * velocidadeFinal * Time.deltaTime;
+        float direcao_z = InputController.inputVertical * velocidadeFinal * Time.deltaTime;
         float direcao_y = -PlayerManager.gravidade; // Automaticamente puxa o jogador para baixo
 
         // Suaviza a velocidade de subida do pulo
